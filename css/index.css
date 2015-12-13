@@ -1,0 +1,16 @@
+body {
+    padding-top: 50px;
+}
+
+.container {
+    width: 95%;
+}
+
+#gl {
+    width: 100%;
+    height: 70%;
+}
+
+#main {
+    /* top: 550; */
+}

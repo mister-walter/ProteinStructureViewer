@@ -1,0 +1,22 @@
+{
+  "libs": [
+    "./libs/tern/defs/reserved",
+    "./libs/tern/defs/lodash",
+    "browser",
+    "chai",
+    "ecma5",
+    "ecma6",
+    "browser",
+    "jquery",
+    "bio-pv",
+    "pviz"
+  ],
+  "loadEagerly": [],
+  "async": true,
+  "plugins": {
+    "modules": {},
+    "requirejs": true,
+    "doc_comment": {},
+    "es_modules": true
+  }
+}

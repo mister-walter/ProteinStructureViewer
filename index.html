@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/pviz-core.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script data-main="js/main" src="js/require.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>1EMA</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div id="main" class="col-md-12"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div id="gl"></div>
+            </div>
+            <div class="col-md-6">
+                <h1>Bootstrap starter template</h1>
+                <p class="lead">Use this document as a way to quickly start any new project.
+                    <br> All you get is this text and a mostly barebones HTML document.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="main" class="col-md-12"></div> 
+    <div id="gl"></div> -->
+    <div id="status">initialising...</div>
+    <script>
+        /* 
+                                                var pviz = this.pviz;
+
+                                                var seq = 'MELAALCRWGLLLALLPPGAASTQVCTGTDMKLRLPASPETHLDMLRHLYQGCQVVQGNLELTYLPTNASLSFLQDIQEVQGYVLIAHNQVRQVPLQRLRIVRGTQLFEDNYALAVLDNGDPLNNTTPVTGASPGGLRELQLRSLTEILKGGVLIQRNPQLCYQDTILWKDIFHKNNQLA';
+                                                var seqEntry = new this.pviz.SeqEntry({
+                                                    sequence: seq
+                                                });
+
+                                                seqEntry.addFeatures([
+                                                    {
+                                                        category: 'secondary structure',
+                                                        type: 'beta_strand',
+                                                        start: 24,
+                                                        end: 26
+                                                    }
+                                                ]);
+
+                                                seqEntry.addFeatures([
+                                                    {
+                                                        category: 'secondary structure',
+                                                        type: 'beta_strand',
+                                                        start: 50,
+                                                        end: 90
+                                                    }
+                                                ]);
+
+                                                var pviz_view = new this.pviz.SeqEntryAnnotInteractiveView({
+                                                    model: seqEntry,
+                                                    el: '#main',
+                                                });
+                                                pviz_view.render();
+
+                                                var protein_3d = pv.Viewer(document.getElementById('gl'), {
+                                                    quality: 'medium',
+                                                    //width: 500,
+                                                    //height: 500,
+                                                    width: 'auto',
+                                                    height: 'auto',
+                                                    antialias: true,
+                                                    outline: true
+                                                });
+
+                                                var structure;
+                                                var basegeom;
+
+                                                function lines() {
+                                                    protein_3d.clear();
+                                                    protein_3d.lines('structure', structure);
+                                                }
+
+                                                function cartoon() {
+                                                    protein_3d.clear();
+                                                    basegeom = protein_3d.cartoon('structure', structure, {
+                                                        color: color.ssSuccession()
+                                                    });
+                                                }
+
+                                                function lineTrace() {
+                                                    protein_3d.clear();
+                                                    protein_3d.lineTrace('structure', structure);
+                                                }
+
+                                                function sline() {
+                                                    protein_3d.clear();
+                                                    protein_3d.sline('structure', structure);
+                                                }
+
+                                                function tube() {
+                                                    protein_3d.clear();
+                                                    protein_3d.tube('structure', structure);
+                                                }
+
+                                                function trace() {
+                                                    protein_3d.clear();
+                                                    protein_3d.trace('structure', structure);
+                                                }
+
+                                                function preset() {
+                                                    protein_3d.clear();
+                                                    var ligand = structure.select({
+                                                        rnames: ['RVP', 'SAH']
+                                                    });
+                                                    protein_3d.ballsAndSticks('ligand', ligand);
+                                                    basegeom = protein_3d.cartoon('protein', structure);
+                                                }
+
+                                                function load(pdb_id) {
+                                                    document.getElementById('status').innerHTML = 'loading ' + pdb_id;
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open('GET', 'pdbs/' + pdb_id + '.pdb');
+                                                    xhr.setRequestHeader('Content-type', 'application/x-pdb');
+                                                    xhr.onreadystatechange = function () {
+                                                        if (xhr.readyState == 4) {
+                                                            structure = pv.io.pdb(xhr.responseText);
+                                                            preset();
+                                                            protein_3d.centerOn(structure);
+                                                        }
+                                                        document.getElementById('status').innerHTML = '';
+                                                    }
+                                                    xhr.send();
+                                                }
+
+                                                function gfp() {
+                                                    load('1EMA');
+                                                }
+
+                                                window.onresize = function (event) {
+                                                    protein_3d.fitParent();
+                                                }
+
+                                                document.addEventListener('DOMContentLoaded', gfp);
+
+                                                var sel;
+                                                var selectedFeature;
+
+                                                this.pviz.FeatureDisplayer.addClickCallback(['helix', 'turn', 'beta_strand'], function (ft) {
+                                                    selectedFeature = ft;
+                                                    console.log(ft.start + " " + ft.end);
+                                                    sel = basegeom.select({
+                                                        rnumRange: [ft.start, ft.end]
+                                                    });
+                                                    //sel = picked.node().structure().createEmptyView();
+                                                    basegeom.setSelection(sel);
+                                                    protein_3d.requestRedraw();
+
+                                                });
+                                                */
+    </script>
+
+    <!-- /.container -->
+</body>
+
+</html>
