@@ -1,0 +1,16 @@
+category	type	text	start	end
+secondary structure	beta_strand		12	22
+secondary structure	beta_strand		25	36
+secondary structure	beta_strand		41	48
+secondary structure	beta_strand		92	100
+secondary structure	beta_strand		105	115
+secondary structure	beta_strand		118	128
+secondary structure	beta_strand		148	152
+secondary structure	beta_strand		160	170
+secondary structure	beta_strand		176	187
+secondary structure	beta_strand		199	207
+secondary structure	beta_strand		220	227
+secondary structure	helix		57	60
+secondary structure	helix		83	86
+secondary structure	helix		4	8
+secondary structure	helix		69	71
