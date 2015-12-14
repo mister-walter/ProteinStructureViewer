@@ -76,7 +76,7 @@ g.feature text {
 }
 
 g.feature.Region rect.feature {
-    fill: #1f78b4;
+    fill: #ff5b34;
 }
 g.feature.Molecule_processing rect.feature {
     fill: #b2df8a;
