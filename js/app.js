@@ -23,15 +23,7 @@ var protein_sequence;
 var pviz_view;
 
 $(document).ready(function () {
-    //var pviz = this.pviz;
-
-    var seq = 'MELAALCRWGLLLALLPPGAASTQVCTGTDMKLRLPASPETHLDMLRHLYQGCQVVQGNLELTYLPTNASLSFLQDIQEVQGYVLIAHNQVRQVPLQRLRIVRGTQLFEDNYALAVLDNGDPLNNTTPVTGASPGGLRELQLRSLTEILKGGVLIQRNPQLCYQDTILWKDIFHKNNQLA';
-    var seqEntry = new pviz.SeqEntry({
-        sequence: seq
-    });
-
     function load_fasta(fasta_id) {
-        //document.getElementById('status').innerHTML = 'loading ' + pdb_id;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'fasta/' + fasta_id + '.fasta.txt');
         xhr.setRequestHeader('Content-type', 'text/plain');
@@ -52,12 +44,10 @@ $(document).ready(function () {
                 });
                 pviz_view.render();
             }
-            //document.getElementById('status').innerHTML = '';
         }
         xhr.send();
     }
 
-    //var protein_3d = pv.Viewer(document.getElementById('gl'), {
     protein_3d = pv.Viewer(document.getElementById('gl'), {
         quality: 'medium',
         //width: 500,
@@ -68,53 +58,11 @@ $(document).ready(function () {
         outline: true
     });
 
-    //var structure;
-    var basegeom;
-
-    function lines() {
-        protein_3d.clear();
-        protein_3d.lines('structure', structure);
-    }
-
-    function cartoon() {
-        protein_3d.clear();
-        basegeom = protein_3d.cartoon('structure', structure, {
-            color: color.ssSuccession()
-        });
-    }
-
-    function lineTrace() {
-        protein_3d.clear();
-        protein_3d.lineTrace('structure', structure);
-    }
-
-    function sline() {
-        protein_3d.clear();
-        protein_3d.sline('structure', structure);
-    }
-
-    function tube() {
-        protein_3d.clear();
-        protein_3d.tube('structure', structure);
-    }
-
-    function trace() {
-        protein_3d.clear();
-        protein_3d.trace('structure', structure);
-    }
-
-    function preset() {
-        protein_3d.clear();
-        var ligand = structure.select({
-            rnames: ['RVP', 'SAH']
-        });
-        protein_3d.ballsAndSticks('ligand', ligand);
-        basegeom = protein_3d.cartoon('protein', structure);
-    }
-
     function showProtein() {
         protein_3d.clear();
-        protein_3d.cartoon('protein', structure);
+        protein_3d.cartoon('protein', structure, {
+            color: color.ssSuccession()
+        });
         protein_3d.ballsAndSticks('chromophore', chromophore);
     }
 
@@ -141,29 +89,23 @@ $(document).ready(function () {
         xhr.send();
     }
 
-    function gfp() {
-        load_pdb('1EMA');
-    }
-
     window.onresize = function (event) {
         protein_3d.fitParent();
     };
 
-    //document.addEventListener('DOMContentLoaded', gfp);
-
     load_fasta('1EMA');
     load_pdb('1EMA');
-    //gfp();
-    var sel;
+
     var selectedFeature;
     /*
      * add a mouseover/mouseout call back based on the feature type
      */
     pviz.FeatureDisplayer.addClickCallback(['helix', 'turn', 'beta_strand', 'functional'], function (ft) {
         selectedFeature = ft;
-        console.log(ft.start + " " + ft.end);
+        
+        /* For each view in the 3d protein view, select the clicked feature */
         protein_3d.forEach(function (geom) {
-            sel = geom.select({
+            var sel = geom.select({
                 rnumRange: [ft.start, ft.end]
             });
             geom.setSelection(sel);
@@ -171,11 +113,4 @@ $(document).ready(function () {
 
         protein_3d.requestRedraw();
     });
-
-    pviz.FeatureDisplayer.addMouseoverCallback(['helix', 'turn', 'beta_strand', 'functional'], function (ft) {
-        var hoverFeature = ft;
-        console.log(hoverFeature);
-    });
-
-
 });
